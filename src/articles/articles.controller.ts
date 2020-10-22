@@ -1,22 +1,26 @@
-import { All, Controller, Get, HttpCode, Param, Post, Redirect, Req, Res } from '@nestjs/common';
-import { Request, Response } from 'express';
+import { Body, Controller, Get, Param, Post, Req } from '@nestjs/common';
+
+import { ArticlesService } from './articles.service';
+import { ArticleDto } from './articles.dto';
+import { Article } from './interfaces/article.interface';
 
 @Controller('articles')
 export class ArticlesController {
+  constructor(
+    private articlesService: ArticlesService
+  ){}
+
   @Get()
-  @Redirect('https://www.baidu.com', 301)
-  findAll(
-    @Req() request: Request,
-  ): any {
-    return {
-      url: 'https://www.163.com',
-      code: 302
-    }
+  async findAll(): Promise<Article[]>{
+    return this.articlesService.findAll()
   }
 
   @Post()
-  create(): string{
-    return 'create success'
+  async create(
+    @Body() articleDto: ArticleDto
+  ){
+    this.articlesService.create(articleDto);
+    return 'create success';
   }
 
   @Get(':id')
