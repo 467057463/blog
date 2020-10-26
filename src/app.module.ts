@@ -6,6 +6,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ArticlesModule } from './articles/articles.module';
 import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 import { generateMongoUri } from './util/index'
 
@@ -27,7 +28,8 @@ import { generateMongoUri } from './util/index'
       inject: [ConfigService],
     }),
     ArticlesModule,
-    UserModule
+    UserModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],

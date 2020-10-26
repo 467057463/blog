@@ -17,7 +17,15 @@ export class UserService {
     return this.userModel.create(user)
   }
 
-  private async getHash(password: string):Promise<string>{
+  async findOne(username: string): Promise<User | undefined>{
+    return await this.userModel.findOne({username}).exec();
+  }
+
+  async getHash(password: string):Promise<string>{
     return await bcrypt.hash(password, 10)
+  }
+
+  comparePassword(password, hash){
+    return bcrypt.compareSync(password, hash)
   }
 }
