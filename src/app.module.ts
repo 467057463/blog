@@ -8,20 +8,17 @@ import { ArticlesModule } from './articles/articles.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 
-import { generateMongoUri } from './util/index'
-
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      expandVariables: true,
+    }),
     MongooseModule.forRootAsync({
-      imports: [ConfigModule],
+      // imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => {
         return {
-          uri: generateMongoUri(
-            configService.get('DATABASE_USER'), 
-            configService.get('DATABASE_PASSWORD'), 
-            configService.get('DATABASE_NAME')
-          ),
+          uri: configService.get('DATABASE_URI'),
           useNewUrlParser: true,
         }
       },
