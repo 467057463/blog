@@ -11,19 +11,19 @@ export class AuthController {
     private readonly authService:AuthService
   ){}
 
-  @UseGuards(LocalAuthGuard)
-  @Post('/login')
-  async login(
-    @Request() req
-  ){
-    return this.authService.login(req.user);
-  }
+  // @UseGuards(LocalAuthGuard)
+  // @Post('/login')
+  // async login(
+  //   @Request() req
+  // ){
+  //   return this.authService.login(req.user);
+  // }
 
-  @UseGuards(AuthGuard('jwt'))
-  @Get('profile')
-  async getProfile(
-    @Request() req
-  ){
-    return req.user
-  }
+  // @UseGuards(AuthGuard('jwt'))
+  // @Get('profile')
+  // async getProfile(
+  //   @Request() req
+  // ){
+  //   return req.user
+  // }
 }
