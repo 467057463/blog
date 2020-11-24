@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, ForbiddenException, Get, Post, Request, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { AuthService } from '../auth/auth.service'
 import { LocalAuthGuard } from '../shared/guard/local-auth.guard';
@@ -25,8 +25,12 @@ export class UserController {
   async register(
     @Body() user
   ){
-    const u = await this.userService.create(user);
-    return this.authService.login(u);
+    try{
+      const u = await this.userService.create(user);
+      return this.authService.login(u);
+    }catch(e){
+      throw new ForbiddenException('用户名已注册')
+    }
   }
 
   @UseGuards(JwtAuthGuard)
