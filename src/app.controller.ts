@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, HttpException, HttpStatus } from '@nestjs/common';
 import { AppService } from './app.service';
 import { ArticlesService } from './articles/articles.service';
 import { Article } from './articles/interfaces/article.interface';
@@ -12,6 +12,7 @@ export class AppController {
 
   @Get()
   async getHello(): Promise<Article[]> {
-    return this.articlesService.findAll()
+    throw new HttpException('异常', HttpStatus.FORBIDDEN)
+    // return this.articlesService.findAll()
   }
 }
