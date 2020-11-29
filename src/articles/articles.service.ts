@@ -17,7 +17,8 @@ export class ArticlesService {
   }
 
   async findAll(): Promise<Article[]>{
-    return this.articleModel.find().exec()
+    return this.articleModel.find()
+      .populate('author', 'username').exec()
     // return this.articles;
   }
 }

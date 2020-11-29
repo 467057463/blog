@@ -13,7 +13,6 @@ export const UserSchema = new mongoose.Schema({
       },
       message: '用户名格式不对'
     }
-    // dropDups: [true, '用户名已注册']
   },
   password: {
     type: String,

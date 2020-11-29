@@ -1,4 +1,5 @@
 export class ArticleDto {
-  readonly title: string;
-  readonly content: string;
+  title: string;
+  content: string;
+  author: string;
 }
