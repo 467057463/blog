@@ -3,7 +3,7 @@ import { UserService } from './user.service';
 import { AuthService } from '../auth/auth.service'
 import { LocalAuthGuard } from '../shared/guard/local-auth.guard';
 import { JwtAuthGuard } from '../shared/guard/jwt-auth.guard';
-
+import { resSuccess, resError } from '../shared/util/index';
 
 
 @Controller('user')
@@ -18,7 +18,11 @@ export class UserController {
   async login(
     @Request() req
   ){
-    return this.authService.login(req.user);
+    const token = await this.authService.login(req.user);
+    return resSuccess(
+      "登录成功",
+      token
+    );
   }
 
   @Post()
@@ -26,10 +30,24 @@ export class UserController {
     @Body() user
   ){
     try{
+      if(user.password !== user.confirm_password){
+        throw new Error('两次输入的密码不一致')
+      }
       const u = await this.userService.create(user);
-      return this.authService.login(u);
-    }catch(e){
-      throw new ForbiddenException('用户名已注册')
+      const token = await this.authService.login(u);
+      return resSuccess(
+        "注册成功",
+        token
+      );
+    }catch(error){
+      // const data = {};
+      // for(const [key, value] of Object.entries(error.errors)){
+      //   console.log(key, value)
+      //   data[key] = value.message;
+      // }
+      // console.log(data)
+      // throw new ForbiddenException(error.message)
+      return resError(error.message)
     }
   }
 
