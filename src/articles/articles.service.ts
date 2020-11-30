@@ -21,5 +21,18 @@ export class ArticlesService {
       .populate('author', 'username').exec()
     // return this.articles;
   }
+
+  async findById(id: string): Promise<any>{
+    // const article = await this.articleModel.findById(id);
+    // article.meta.view += 1;
+    // article.save()
+    return this.articleModel.findById(id)
+      .populate('author', 'username').exec()
+  }
+
+  async updateArticle(id: string, article: any){
+    const doc = await this.articleModel.updateOne({_id: id}, article);
+    return doc
+  }
 }
 

@@ -18,7 +18,7 @@ export const ArticleSchema = new Schema({
   meta: {
     view: {
       type: Number,
-      default: 1
+      default: 0
     },
     like: {
       type: Number,
