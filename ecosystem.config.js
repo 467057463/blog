@@ -18,7 +18,7 @@ module.exports = {
       host : '80.240.22.42',
       ref  : 'origin/master',
       repo : 'git@github.com:467057463/blog.git',
-      path : '/var/www/blog_nest',
+      path : '/var/www/blog_api',
       'pre-deploy-local': '',
       'post-deploy' : 'yarn install && pm2 reload ecosystem.config.js --env production',
       'pre-setup': '',
