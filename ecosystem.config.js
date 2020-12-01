@@ -20,7 +20,7 @@ module.exports = {
       repo : 'git@github.com:467057463/blog.git',
       path : '/var/www/blog_api',
       'pre-deploy-local': '',
-      'post-deploy' : 'yarn install && pm2 reload ecosystem.config.js --env production',
+      'post-deploy' : 'yarn install && yarn build && pm2 reload ecosystem.config.js --env production',
       'pre-setup': '',
       "env": {
         "NODE_ENV": "production"
