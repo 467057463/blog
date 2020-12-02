@@ -6,7 +6,7 @@ export const UserSchema = new mongoose.Schema({
     type: String,
     required: [true, '用户名不能为空'],
     unique: true,
-    minlength: [6, '用户名长度不能低于6个字符'],
+    minlength: ['6', '用户名长度不能低于6个字符'],
     validate: {
       validator: function(v){
         return /\d{3}-\d{3}-\d{4}/.test(v)
