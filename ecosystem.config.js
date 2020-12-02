@@ -3,7 +3,7 @@ module.exports = {
     {
       name: 'blog_nest',
       script: 'yarn',
-      args: 'start:prod'
+      args: 'start:prod',
       env: {
         "COMMON_VARIABLE": "true"
       },
