@@ -2,7 +2,8 @@ module.exports = {
   apps : [
     {
       name: 'blog_nest',
-      script: 'dist/main.js',
+      script: 'yarn',
+      args: 'start:prod'
       env: {
         "COMMON_VARIABLE": "true"
       },
