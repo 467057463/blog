@@ -21,7 +21,7 @@ module.exports = {
       repo : 'git@github.com:467057463/blog.git',
       path : '/var/www/blog_api',
       'pre-deploy-local': '',
-      'post-deploy' : 'npm install && npm run prebuild && pm2 reload ecosystem.config.js --env production',
+      'post-deploy' : 'npm install && npm run build && pm2 reload ecosystem.config.js --env production',
       'pre-setup': '',
       "env": {
         "NODE_ENV": "production"
