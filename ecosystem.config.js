@@ -3,7 +3,7 @@ module.exports = {
     {
       name: 'blog_api',
       script: 'npm',
-      args: 'start:prod',
+      args: 'run start:prod',
       env: {
         "COMMON_VARIABLE": "true"
       },
