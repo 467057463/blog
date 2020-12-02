@@ -1,7 +1,7 @@
 module.exports = {
   apps : [
     {
-      name: 'blog_nest',
+      name: 'blog_api',
       script: 'npm',
       args: 'start:prod',
       env: {
