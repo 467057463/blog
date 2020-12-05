@@ -2,6 +2,7 @@ import { Body, Controller, Get, Param, Post, UseGuards, Request, Put, Delete, No
 
 import { ArticlesService } from './articles.service';
 import { ArticleDto } from './articles.dto';
+import { CommentDto } from './comments.dto';
 import { Article } from './interfaces/article.interface';
 import { JwtAuthGuard } from '../shared/guard/jwt-auth.guard';
 import { resSuccess } from '../shared/util';
@@ -110,4 +111,20 @@ export class ArticlesController {
       throw new NotFoundException('改文章不存在')
     }    
   }
+
+  // 添加评论
+  @UseGuards(JwtAuthGuard)
+  @Post(':id/comments')
+  async createComment(
+    @Param('id') id,
+    @Request() req,
+    @Body() commentDto: CommentDto
+  ){
+    commentDto.author = req.user.userId;
+    commentDto.article = req.user.id;
+
+    const comment = await this.articlesService.createComment(id, commentDto);
+    return resSuccess('评论发布成功', comment)
+  }
+
 }

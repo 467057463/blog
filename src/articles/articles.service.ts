@@ -2,12 +2,15 @@ import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Article } from './interfaces/article.interface'
+import { Comment } from './interfaces/comment.interface'
 import { ArticleDto } from './articles.dto';
+import { CommentDto } from './comments.dto';
 
 @Injectable()
 export class ArticlesService {
   constructor(
-    @InjectModel('Article') private readonly articleModel:Model<Article>
+    @InjectModel('Article') private readonly articleModel:Model<Article>,
+    @InjectModel('Comment') private readonly commentModel:Model<Comment>
   ){}
 
   async create(articleDto: ArticleDto): Promise<Article>{
@@ -15,17 +18,26 @@ export class ArticlesService {
     return createArticle.save()
   }
 
-  async findAll(): Promise<Article[]>{
+  async findAll(page = 1, quantity = 10): Promise<Article[]>{
     return this.articleModel.find()
-      .populate('author', 'username').exec()
+      .populate('author', 'username')
+      .sort({'updatedAt':-1})
+      .skip((page - 1) * quantity)
+      .limit(quantity)
+      .exec()
   }
 
   async findById(id: string): Promise<any>{
-    // const article = await this.articleModel.findById(id);
-    // article.meta.view += 1;
-    // article.save()
     return this.articleModel.findById(id)
-      .populate('author', 'username').exec()
+      .populate('author', 'username')
+      .populate({
+        path: 'comments',
+        populate: { 
+          path: 'author',
+          select: 'username'
+        }
+      })
+      .exec()
   }
 
   async updateArticle(id: string, article: any){
@@ -63,6 +75,17 @@ export class ArticlesService {
         }
       })
     }
+  }
+
+  async createComment(articleId: string, commentDto: CommentDto){
+    const createComment = new this.commentModel(commentDto)
+    const comment = await createComment.save();
+    await this.articleModel.update({_id: articleId}, {
+      $addToSet:{
+        comments: comment._id
+      },      
+    })
+    return comment;
   }
 }
 

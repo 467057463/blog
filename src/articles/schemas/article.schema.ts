@@ -15,6 +15,10 @@ export const ArticleSchema = new Schema({
     ref: 'User',
     required: true,
   },
+  comments: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Comment'
+  }],
   meta: {
     view: {
       type: Number,
