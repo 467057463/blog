@@ -13,13 +13,11 @@ export class ArticlesService {
   async create(articleDto: ArticleDto): Promise<Article>{
     const createArticle = new this.articleModel(articleDto)
     return createArticle.save()
-    // this.articles.push(article)
   }
 
   async findAll(): Promise<Article[]>{
     return this.articleModel.find()
       .populate('author', 'username').exec()
-    // return this.articles;
   }
 
   async findById(id: string): Promise<any>{
@@ -33,6 +31,38 @@ export class ArticlesService {
   async updateArticle(id: string, article: any){
     const doc = await this.articleModel.updateOne({_id: id}, article);
     return doc
+  }
+
+  async incView(id: string){
+    return this.articleModel.update({_id: id}, {
+      $inc: {'meta.view': 1}
+    })
+  }  
+
+  async deleteArticle(id: string): Promise<any>{
+    return this.articleModel.deleteOne({_id: id})
+  }
+
+  async like(id: string, isLike: boolean, userId){
+    if(isLike){
+      return this.articleModel.update({_id: id}, {
+        $inc: {
+          'meta.like': 1,
+        },  
+        $addToSet:{
+          'meta.likeUsers': userId
+        },      
+      })
+    }else{
+      return this.articleModel.update({_id: id}, {
+        $inc: {
+          'meta.like': isLike ? 1 : -1,
+        },  
+        $unset:{
+          'meta.likeUsers': userId
+        }
+      })
+    }
   }
 }
 

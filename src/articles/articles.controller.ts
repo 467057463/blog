@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, UseGuards, Request, Put, Delete } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards, Request, Put, Delete, NotFoundException, UnauthorizedException } from '@nestjs/common';
 
 import { ArticlesService } from './articles.service';
 import { ArticleDto } from './articles.dto';
@@ -41,27 +41,73 @@ export class ArticlesController {
     @Param('id') id
   ): Promise<any>{
     const article = await this.articlesService.findById(id);
-    return resSuccess(null, article)
+    if(article){
+      await this.articlesService.incView(id)
+      return resSuccess(null, article)
+    }else{
+      throw new NotFoundException('改文章不存在')
+    }
   }
 
   // 更新
+  @UseGuards(JwtAuthGuard)
   @Put(':id')
   async update(
     @Param('id') id,
-    @Body() articleDto: ArticleDto
+    @Body() articleDto: ArticleDto,
+    @Request() req
   ): Promise<any>{
-    await this.articlesService.updateArticle(id, articleDto)
-    return resSuccess('文章更新成功', {
-      _id: id
-    });
+    const article = await this.articlesService.findById(id);
+    if(article){
+      if(req.user.userId === String(article.author._id)){
+        await this.articlesService.updateArticle(id, articleDto)
+        return resSuccess('文章更新成功', {
+          _id: id
+        });
+      }else{
+        throw new UnauthorizedException('权限异常')
+      }      
+    }else{
+      throw new NotFoundException('改文章不存在')
+    }    
   }
 
   // 删除
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   async delete(
-    @Param('id') id
+    @Param('id') id,
+    @Request() req
   ): Promise<any>{
-    
-    return resSuccess('文章删除成功', null);
+    const article = await this.articlesService.findById(id);
+    if(article){
+      if(req.user.userId === String(article.author._id)){
+        await this.articlesService.deleteArticle(id);
+        return resSuccess('文章删除成功', null);
+      }else{
+        throw new UnauthorizedException('权限异常')
+      }
+    }else{
+      throw new NotFoundException('改文章不存在')
+    } 
+  }
+
+  // 点赞
+  @UseGuards(JwtAuthGuard)
+  @Post(':id/like')
+  async like(
+    @Param('id') id,
+    @Body('like') islike,
+    @Request() req
+  ){
+    const article = await this.articlesService.findById(id);
+    if(article){
+      await this.articlesService.like(id, !!islike, req.user.userId)
+      return resSuccess(`${!!islike ? '点赞成功' : '您已取消点赞' } `, {
+        _id: id
+      })
+    }else{
+      throw new NotFoundException('改文章不存在')
+    }    
   }
 }

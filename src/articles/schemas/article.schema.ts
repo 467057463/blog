@@ -23,7 +23,11 @@ export const ArticleSchema = new Schema({
     like: {
       type: Number,
       default: 0
-    }
+    },
+    likeUsers: [{
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    }]
   }
 },{
   timestamps:true
