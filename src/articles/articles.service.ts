@@ -19,6 +19,8 @@ export class ArticlesService {
   }
 
   async findAll(page = 1, quantity = 10): Promise<Article[]>{
+    page = Number(page);
+    quantity = Number(quantity);
     return this.articleModel.find()
       .populate('author', 'username')
       .sort({'updatedAt':-1})

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, UseGuards, Request, Put, Delete, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { Body, Controller, Get, Param, Query, Post, UseGuards, Request, Put, Delete, NotFoundException, UnauthorizedException } from '@nestjs/common';
 
 import { ArticlesService } from './articles.service';
 import { ArticleDto } from './articles.dto';
@@ -17,8 +17,11 @@ export class ArticlesController {
   
   // 列表
   @Get()
-  async findAll(): Promise<any>{
-    const result = await this.articlesService.findAll()
+  async findAll(
+    @Query('page') page,
+    @Query('quantity') quantity
+  ): Promise<any>{
+    const result = await this.articlesService.findAll(page, quantity)
     return resSuccess(null, result)
   }
 
