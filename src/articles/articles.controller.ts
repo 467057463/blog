@@ -19,18 +19,6 @@ export class ArticlesController {
   
   // 列表
   @Get()
-  @ApiQuery({
-    name: 'page',
-    description: '页码',
-    required: false,
-    type: Number,
-  })
-  @ApiQuery({
-    name: 'quantity',
-    description: '每页显示的数量',
-    required: false,
-    type: Number,
-  })
   async list(
     @Query('page') page,
     @Query('quantity') quantity

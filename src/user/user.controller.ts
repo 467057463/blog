@@ -21,10 +21,6 @@ export class UserController {
 
   @UseGuards(LocalAuthGuard)
   @Post('/login')
-  @ApiBody({
-    description: '用户登录',
-    type: LoginDTO,
-  })
   async login(
     @Request() req
   ){
