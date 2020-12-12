@@ -10,9 +10,9 @@ export class AppController {
     private readonly articlesService: ArticlesService
   ) {}
 
-  @Get()
-  async getHello(): Promise<Article[]> {
-    throw new HttpException('异常', HttpStatus.FORBIDDEN)
-    // return this.articlesService.findAll()
-  }
+  // @Get()
+  // async getHello(): Promise<Article[]> {
+  //   throw new HttpException('异常', HttpStatus.FORBIDDEN)
+  //   // return this.articlesService.findAll()
+  // }
 }

@@ -1,4 +1,5 @@
 import { Body, Controller, Get, Param, Query, Post, UseGuards, Request, Put, Delete, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { ApiTags, ApiQuery, ApiBearerAuth } from '@nestjs/swagger';
 
 import { ArticlesService } from './articles.service';
 import { ArticleDto } from './articles.dto';
@@ -8,7 +9,8 @@ import { JwtAuthGuard } from '../shared/guard/jwt-auth.guard';
 import { resSuccess } from '../shared/util';
 
 
-
+@ApiBearerAuth()
+@ApiTags('文章')
 @Controller('articles')
 export class ArticlesController {
   constructor(
@@ -17,7 +19,21 @@ export class ArticlesController {
   
   // 列表
   @Get()
-  async findAll(
+  @ApiQuery({
+    name: 'page',
+    description: '页码',
+    required: false,
+    type: Number,
+    example: 1, 
+  })
+  @ApiQuery({
+    name: 'quantity',
+    description: '每页显示的数量',
+    required: false,
+    type: Number,
+    example: 10, 
+  })
+  async list(
     @Query('page') page,
     @Query('quantity') quantity
   ): Promise<any>{

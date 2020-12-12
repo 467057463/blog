@@ -1,11 +1,17 @@
 import { Body, Controller, ForbiddenException, Get, Post, Request, UseGuards } from '@nestjs/common';
+import { ApiTags, ApiBody, ApiBearerAuth } from '@nestjs/swagger';
+
+
 import { UserService } from './user.service';
 import { AuthService } from '../auth/auth.service'
 import { LocalAuthGuard } from '../shared/guard/local-auth.guard';
 import { JwtAuthGuard } from '../shared/guard/jwt-auth.guard';
 import { resSuccess, resError } from '../shared/util/index';
 
+import LoginDTO from './dto/login.dto';
 
+@ApiBearerAuth()
+@ApiTags('用户')
 @Controller('user')
 export class UserController {
   constructor(
@@ -15,6 +21,10 @@ export class UserController {
 
   @UseGuards(LocalAuthGuard)
   @Post('/login')
+  @ApiBody({
+    description: '用户登录',
+    type: LoginDTO,
+  })
   async login(
     @Request() req
   ){
@@ -40,13 +50,6 @@ export class UserController {
         token
       );
     }catch(error){
-      // const data = {};
-      // for(const [key, value] of Object.entries(error.errors)){
-      //   console.log(key, value)
-      //   data[key] = value.message;
-      // }
-      // console.log(data)
-      // throw new ForbiddenException(error.message)
       return resError(error.message)
     }
   }
