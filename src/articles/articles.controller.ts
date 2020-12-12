@@ -24,14 +24,12 @@ export class ArticlesController {
     description: '页码',
     required: false,
     type: Number,
-    example: 1, 
   })
   @ApiQuery({
     name: 'quantity',
     description: '每页显示的数量',
     required: false,
     type: Number,
-    example: 10, 
   })
   async list(
     @Query('page') page,
