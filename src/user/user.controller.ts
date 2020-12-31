@@ -24,10 +24,10 @@ export class UserController {
   async login(
     @Request() req
   ){
-    const token = await this.authService.login(req.user);
+    const res = await this.authService.login(req.user);
     return resSuccess(
       "登录成功",
-      token
+      res
     );
   }
 
@@ -55,7 +55,7 @@ export class UserController {
   async getCurrentUser(
     @Request() req
   ){
-    return resSuccess('验证成功', req.user)
+    return resSuccess('验证成功', {user: req.user})
   }
 
   @UseGuards(JwtAuthGuard)
