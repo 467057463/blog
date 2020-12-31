@@ -22,9 +22,15 @@ export class ArticlesController {
   async list(
     @Query('page') page,
     @Query('quantity') quantity
-  ): Promise<any>{
-    const result = await this.articlesService.findAll(page, quantity)
-    return resSuccess(null, result)
+  ): Promise<any>{    
+    const list = await this.articlesService.findAll(page, quantity);
+    const count = await this.articlesService.count();
+    return resSuccess(null, {
+      page: page || 1,
+      quantity: quantity || 10,
+      list,
+      count
+    })
   }
 
   // 新建

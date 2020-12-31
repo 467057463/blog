@@ -18,6 +18,10 @@ export class ArticlesService {
     return createArticle.save()
   }
 
+  async count(): Promise<number>{
+    return this.articleModel.count({}).exec();
+  }
+
   async findAll(page = 1, quantity = 10): Promise<Article[]>{
     page = Number(page);
     quantity = Number(quantity);

@@ -51,6 +51,14 @@ export class UserController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Get('current')
+  async getCurrentUser(
+    @Request() req
+  ){
+    return resSuccess('验证成功', req.user)
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Get('profile')
   async getProfile(
     @Request() req
