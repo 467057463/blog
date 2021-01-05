@@ -30,6 +30,7 @@
     "@nestjs/platform-express": "^7.0.0",
     "bcrypt": "^5.0.0",
     "class-validator": "^0.12.2",
+    "marked": "^1.2.7",
     "mongoose": "^5.10.10",
     "mongoose-unique-validator": "^2.0.3",
     "passport": "^0.4.1",
