@@ -1,6 +1,12 @@
 import * as mongoose from 'mongoose';
 import * as marked from 'marked'; 
 import * as cheerio from 'cheerio';
+import * as remark from 'remark';
+import * as html from 'remark-html';
+import * as toc from 'remark-toc'
+import * as extractToc from 'remark-extract-toc';
+import * as slug from 'remark-slug';
+
 const { Schema } = mongoose;
 
 export const ArticleSchema = new Schema({
@@ -44,7 +50,11 @@ export const ArticleSchema = new Schema({
 
 ArticleSchema.virtual('contentHtml')
   .get(function(){
-    return marked(this.content)
+    return remark()
+    .use(slug)
+    .use(html)
+    .processSync(this.content)
+    .toString()
   })
 
 ArticleSchema.virtual('describe')
@@ -58,18 +68,10 @@ ArticleSchema.virtual('describe')
 
 ArticleSchema.virtual('menu')
   .get(function(){
-    const $ = cheerio.load(this.contentHtml)
-    const menuAry = [];
-    $('body').children().each(function(index){
-      // 判断是否为H开头的标签并且是h2以上
-      if(this.name[0].toUpperCase() === 'H' && Number(this.name[1]) > 1){
-        // console.log(this.name, $(this).text())
-        menuAry.push({
-          level: Number(this.name[1] - 1),
-          text: this.name,
-          href: `head-${index}`
-        })
-      }
-    })
-    return menuAry;
+    const processor = remark().use(slug).use(extractToc, {
+      keys: ["data"]
+    });
+    const node = processor.parse(this.content);
+    const tree = processor.runSync(node);
+    return tree
   })
