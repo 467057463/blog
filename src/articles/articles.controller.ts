@@ -40,7 +40,7 @@ export class ArticlesController {
     @Request() req,
     @Body() articleDto: ArticleDto
   ): Promise<any>{
-    articleDto.author = req.user.userId;
+    articleDto.author = req.user._id;
     const article = await this.articlesService.create(articleDto);
     return resSuccess('文章发表成功', {
       _id: article._id
@@ -71,7 +71,7 @@ export class ArticlesController {
   ): Promise<any>{
     const article = await this.articlesService.findById(id);
     if(article){
-      if(req.user.userId === String(article.author._id)){
+      if(req.user._id === String(article.author._id)){
         await this.articlesService.updateArticle(id, articleDto)
         return resSuccess('文章更新成功', {
           _id: id
