@@ -43,7 +43,6 @@ export class ArticlesService {
           select: 'username'
         }
       })
-      .exec()
   }
 
   async updateArticle(id: string, article: any){

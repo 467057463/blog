@@ -57,7 +57,7 @@ export class ArticlesController {
       await this.articlesService.incView(id)
       return resSuccess(null, article)
     }else{
-      throw new NotFoundException('改文章不存在')
+      throw new NotFoundException('该文章不存在')
     }
   }
 
