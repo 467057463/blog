@@ -1,9 +1,6 @@
 import * as mongoose from 'mongoose';
-import * as marked from 'marked'; 
-import * as cheerio from 'cheerio';
 import * as remark from 'remark';
 import * as html from 'remark-html';
-import * as toc from 'remark-toc'
 import * as extractToc from 'remark-extract-toc';
 import * as slug from 'remark-slug';
 
