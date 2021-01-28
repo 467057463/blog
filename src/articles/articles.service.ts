@@ -27,7 +27,7 @@ export class ArticlesService {
     quantity = Number(quantity);
     return this.articleModel.find()
       .populate('author', 'username')
-      .sort({'updatedAt':-1})
+      .sort({'createdAt':-1})
       .skip((page - 1) * quantity)
       .limit(quantity)
       .exec()
