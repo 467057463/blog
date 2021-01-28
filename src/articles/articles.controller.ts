@@ -93,7 +93,7 @@ export class ArticlesController {
   ): Promise<any>{
     const article = await this.articlesService.findById(id);
     if(article){
-      if(req.user.userId === String(article.author._id)){
+      if(req.user._id === String(article.author._id)){
         await this.articlesService.deleteArticle(id);
         return resSuccess('文章删除成功', null);
       }else{
