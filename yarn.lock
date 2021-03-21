@@ -2933,6 +2933,13 @@ fast-safe-stringify@2.0.7:
   resolved "https://registry.npm.taobao.org/fast-safe-stringify/download/fast-safe-stringify-2.0.7.tgz#124aa885899261f68aedb42a7c080de9da608743"
   integrity sha1-EkqohYmSYfaK7bQqfAgN6dpgh0M=
 
+fault@^1.0.0:
+  version "1.0.4"
+  resolved "https://registry.npm.taobao.org/fault/download/fault-1.0.4.tgz#eafcfc0a6d214fc94601e170df29954a4f842f13"
+  integrity sha1-6vz8Cm0hT8lGAeFw3ymVSk+ELxM=
+  dependencies:
+    format "^0.2.0"
+
 fb-watchman@^2.0.0:
   version "2.0.1"
   resolved "https://registry.npm.taobao.org/fb-watchman/download/fb-watchman-2.0.1.tgz#fc84fb39d2709cf3ff6d743706157bb5708a8a85"
@@ -3063,6 +3070,11 @@ form-data@~2.3.2:
     asynckit "^0.4.0"
     combined-stream "^1.0.6"
     mime-types "^2.1.12"
+
+format@^0.2.0:
+  version "0.2.2"
+  resolved "https://registry.npm.taobao.org/format/download/format-0.2.2.tgz#d6170107e9efdc4ed30c9dc39016df942b5cb58b"
+  integrity sha1-1hcBB+nv3E7TDJ3DkBbflCtctYs=
 
 formidable@^1.2.0:
   version "1.2.2"
@@ -3363,6 +3375,16 @@ hast-util-whitespace@^1.0.0:
   version "1.0.4"
   resolved "https://registry.npm.taobao.org/hast-util-whitespace/download/hast-util-whitespace-1.0.4.tgz#e4fe77c4a9ae1cb2e6c25e02df0043d0164f6e41"
   integrity sha1-5P53xKmuHLLmwl4C3wBD0BZPbkE=
+
+highlight.js@^10.7.0:
+  version "10.7.0"
+  resolved "https://registry.npm.taobao.org/highlight.js/download/highlight.js-10.7.0.tgz#2b4232f45f000a72ae6ef05fe83b831d75add6cb"
+  integrity sha1-K0Iy9F8ACnKubvBf6DuDHXWt1ss=
+
+highlight.js@~10.6.0:
+  version "10.6.0"
+  resolved "https://registry.npm.taobao.org/highlight.js/download/highlight.js-10.6.0.tgz#0073aa71d566906965ba6e1b7be7b2682f5e18b6"
+  integrity sha1-AHOqcdVmkGllum4be+eyaC9eGLY=
 
 hosted-git-info@^2.1.4:
   version "2.8.8"
@@ -4568,6 +4590,14 @@ longest-streak@^2.0.0:
   resolved "https://registry.npm.taobao.org/longest-streak/download/longest-streak-2.0.4.tgz#b8599957da5b5dab64dee3fe316fa774597d90e4"
   integrity sha1-uFmZV9pbXatk3uP+MW+ndFl9kOQ=
 
+lowlight@^1.2.0:
+  version "1.19.0"
+  resolved "https://registry.npm.taobao.org/lowlight/download/lowlight-1.19.0.tgz#b8544199cafcf10c5731b21c7458c358f79a2a97"
+  integrity sha1-uFRBmcr88QxXMbIcdFjDWPeaKpc=
+  dependencies:
+    fault "^1.0.0"
+    highlight.js "~10.6.0"
+
 lru-cache@^6.0.0:
   version "6.0.0"
   resolved "https://registry.npm.taobao.org/lru-cache/download/lru-cache-6.0.0.tgz?cache=0&sync_timestamp=1594427582110&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Flru-cache%2Fdownload%2Flru-cache-6.0.0.tgz#6d6fe6570ebd96aaf90fcad1dafa3b2566db3a94"
@@ -5756,6 +5786,14 @@ remark-extract-toc@^1.1.0:
   integrity sha1-aci2muxb7yKOaphyHRIv4v4SrQc=
   dependencies:
     unist-util-index "^2.0.0"
+
+remark-highlight.js@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.npm.taobao.org/remark-highlight.js/download/remark-highlight.js-6.0.0.tgz#cb05387ddddeb078f0b61ce6299f6323f05098fc"
+  integrity sha1-ywU4fd3esHjwthzmKZ9jI/BQmPw=
+  dependencies:
+    lowlight "^1.2.0"
+    unist-util-visit "^2.0.0"
 
 remark-html@^13.0.1:
   version "13.0.1"

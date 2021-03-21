@@ -3,6 +3,8 @@ import * as remark from 'remark';
 import * as html from 'remark-html';
 import * as extractToc from 'remark-extract-toc';
 import * as slug from 'remark-slug';
+// import * as hljs from 'highlight.js';
+import * as highlight from 'remark-highlight.js';
 
 const { Schema } = mongoose;
 
@@ -49,9 +51,12 @@ ArticleSchema.virtual('contentHtml')
   .get(function(){
     return remark()
     .use(slug)
+    .use(highlight)
     .use(html)
     .processSync(this.content)
     .toString()
+    // console.log(hljs)
+    // return hljs.highlightAuto(content).value
   })
 
 ArticleSchema.virtual('describe')
