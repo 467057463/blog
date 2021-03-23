@@ -4,6 +4,8 @@ import * as html from 'remark-html';
 import * as extractToc from 'remark-extract-toc';
 import * as slug from 'remark-slug';
 import * as cheerio from 'cheerio';
+// import * as hljs from 'highlight.js';
+import * as highlight from 'remark-highlight.js';
 
 const { Schema } = mongoose;
 
@@ -50,6 +52,7 @@ ArticleSchema.virtual('contentHtml')
   .get(function(){
     const res = remark()
     .use(slug)
+    .use(highlight)
     .use(html)
     .processSync(this.content)
     .toString()
