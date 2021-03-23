@@ -51,7 +51,7 @@ export const ArticleSchema = new Schema({
 ArticleSchema.virtual('contentHtml')
   .get(function(){
     const res = remark()
-    .use(slug)
+    // .use(slug)
     .use(highlight)
     .use(html)
     .processSync(this.content)
@@ -61,11 +61,13 @@ ArticleSchema.virtual('contentHtml')
     $('h1,h2,h3,h4,h5,h6').each(function(i, elem){
       $(this).attr('id', `heading-${i + 1}`)
     })
-    return $.html();
+    return $("body").html();
   })
 
 ArticleSchema.virtual('describe')
   .get(function(){
+    const $ = cheerio.load(this.contentHtml);
+    return $('body').text().replace(/\n/g, '');
     return this.contentHtml
       .replace(/<[^>]*>/gi, '')
       .replace(/&nbsp;/gi, '')
@@ -75,10 +77,24 @@ ArticleSchema.virtual('describe')
 
 ArticleSchema.virtual('menu')
   .get(function(){
-    const processor = remark().use(slug).use(extractToc, {
+    const processor = remark()
+    .use(slug)
+    .use(extractToc, {
       keys: ["data"]
     });
     const node = processor.parse(this.content);
     const tree = processor.runSync(node);
-    return tree
+
+    let i = 0;
+    function walk(tree){
+      const res = tree.map(item =>{
+        item.data.id = `heading-${++i}`
+        if(item.children && item.children.length > 0){
+          walk(item.children)
+        }
+        return item;
+      })
+      return res;
+    }
+    return walk(tree);
   })
