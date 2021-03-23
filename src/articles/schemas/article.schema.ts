@@ -3,6 +3,7 @@ import * as remark from 'remark';
 import * as html from 'remark-html';
 import * as extractToc from 'remark-extract-toc';
 import * as slug from 'remark-slug';
+import * as cheerio from 'cheerio';
 
 const { Schema } = mongoose;
 
@@ -47,11 +48,17 @@ export const ArticleSchema = new Schema({
 
 ArticleSchema.virtual('contentHtml')
   .get(function(){
-    return remark()
+    const res = remark()
     .use(slug)
     .use(html)
     .processSync(this.content)
     .toString()
+
+    const $ = cheerio.load(res);
+    $('h1,h2,h3,h4,h5,h6').each(function(i, elem){
+      $(this).attr('id', `heading-${i + 1}`)
+    })
+    return $.html();
   })
 
 ArticleSchema.virtual('describe')
