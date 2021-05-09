@@ -16,9 +16,9 @@ module.exports = {
   deploy : {
     production : {
       user : 'root',
-      host : '80.240.22.42',
+      host : '95.179.164.10',
       ref  : 'origin/master',
-      repo : 'git@github.com:467057463/blog.git',
+      repo : 'git@github.com:467057463/blog_api.git',
       path : '/var/www/blog_api',
       'pre-deploy-local': '',
       'post-deploy' : 'npm install && npm run build && pm2 reload ecosystem.config.js --env production',
