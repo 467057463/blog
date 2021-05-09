@@ -29,6 +29,7 @@
     "@nestjs/passport": "^7.1.0",
     "@nestjs/platform-express": "^7.0.0",
     "bcrypt": "^5.0.0",
+    "cheerio": "^1.0.0-rc.5",
     "class-validator": "^0.12.2",
     "highlight.js": "^10.7.0",
     "mongoose": "^5.10.10",

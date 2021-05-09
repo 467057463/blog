@@ -3,6 +3,7 @@ import * as remark from 'remark';
 import * as html from 'remark-html';
 import * as extractToc from 'remark-extract-toc';
 import * as slug from 'remark-slug';
+import * as cheerio from 'cheerio';
 // import * as hljs from 'highlight.js';
 import * as highlight from 'remark-highlight.js';
 
@@ -49,18 +50,24 @@ export const ArticleSchema = new Schema({
 
 ArticleSchema.virtual('contentHtml')
   .get(function(){
-    return remark()
-    .use(slug)
+    const res = remark()
+    // .use(slug)
     .use(highlight)
     .use(html)
     .processSync(this.content)
     .toString()
-    // console.log(hljs)
-    // return hljs.highlightAuto(content).value
+
+    const $ = cheerio.load(res);
+    $('h1,h2,h3,h4,h5,h6').each(function(i, elem){
+      $(this).attr('id', `heading-${i + 1}`)
+    })
+    return $("body").html();
   })
 
 ArticleSchema.virtual('describe')
   .get(function(){
+    const $ = cheerio.load(this.contentHtml);
+    return $('body').text().replace(/\n/g, '');
     return this.contentHtml
       .replace(/<[^>]*>/gi, '')
       .replace(/&nbsp;/gi, '')
@@ -70,10 +77,24 @@ ArticleSchema.virtual('describe')
 
 ArticleSchema.virtual('menu')
   .get(function(){
-    const processor = remark().use(slug).use(extractToc, {
+    const processor = remark()
+    .use(slug)
+    .use(extractToc, {
       keys: ["data"]
     });
     const node = processor.parse(this.content);
     const tree = processor.runSync(node);
-    return tree
+
+    let i = 0;
+    function walk(tree){
+      const res = tree.map(item =>{
+        item.data.id = `heading-${++i}`
+        if(item.children && item.children.length > 0){
+          walk(item.children)
+        }
+        return item;
+      })
+      return res;
+    }
+    return walk(tree);
   })
