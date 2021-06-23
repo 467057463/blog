@@ -6,7 +6,7 @@ import * as slug from 'remark-slug';
 import * as cheerio from 'cheerio';
 // import * as hljs from 'highlight.js';
 import * as highlight from 'remark-highlight.js';
-
+import * as remarkPrism from 'remark-prism';
 const { Schema } = mongoose;
 
 export const ArticleSchema = new Schema({
@@ -52,7 +52,21 @@ ArticleSchema.virtual('contentHtml')
   .get(function(){
     const res = remark()
     // .use(slug)
-    .use(highlight)
+    // .use(highlight)
+    .use(remarkPrism, { 
+      showSpotlight: true,
+      plugins: [
+        'autolinker',
+        'command-line',
+        'data-uri-highlight',
+        'diff-highlight',
+        'inline-color',
+        'keep-markup',
+        'line-numbers',
+        'show-invisibles',
+        'treeview',
+      ]
+    })
     .use(html)
     .processSync(this.content)
     .toString()
