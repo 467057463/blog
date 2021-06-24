@@ -56,13 +56,14 @@ ArticleSchema.virtual('contentHtml')
     .use(remarkPrism, { 
       showSpotlight: true,
       plugins: [
+        'line-highlight',
+        'line-numbers',
+        'diff-highlight',
         'autolinker',
         'command-line',
         'data-uri-highlight',
-        'diff-highlight',
         'inline-color',
         'keep-markup',
-        'line-numbers',
         'show-invisibles',
         'treeview',
       ]
