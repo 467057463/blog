@@ -42,9 +42,7 @@ export class ArticlesController {
   ): Promise<any>{
     articleDto.author = req.user._id;
     const article = await this.articlesService.create(articleDto);
-    return resSuccess('文章发表成功', {
-      _id: article._id
-    });
+    return resSuccess('文章发表成功', article);
   }
 
   // 详情
@@ -73,9 +71,7 @@ export class ArticlesController {
     if(article){
       if(req.user._id === String(article.author._id)){
         await this.articlesService.updateArticle(id, articleDto)
-        return resSuccess('文章更新成功', {
-          _id: id
-        });
+        return resSuccess('文章更新成功', article);
       }else{
         throw new UnauthorizedException('权限异常')
       }      
