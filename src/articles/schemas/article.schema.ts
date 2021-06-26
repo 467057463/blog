@@ -48,36 +48,36 @@ export const ArticleSchema = new Schema({
   }
 })
 
-// ArticleSchema.virtual('contentHtml')
-//   .get(function(){
-//     const res = remark()
-//     // .use(slug)
-//     // .use(highlight)
-//     .use(remarkPrism, { 
-//       // showSpotlight: true,
-//       plugins: [
-//         // 'autolinker',
-//         // 'command-line',
-//         // 'data-uri-highlight',
-//         // 'diff-highlight',
-//         // 'inline-color',
-//         // 'keep-markup',
-//         // 'line-numbers',
-//         // 'show-invisibles',
-//         // 'treeview',
-//         // 'line-highlight',
-//       ]
-//     })
-//     .use(html)
-//     .processSync(this.content)
-//     .toString()
+ArticleSchema.virtual('contentHtml')
+  .get(function(){
+    const res = remark()
+    // .use(slug)
+    // .use(highlight)
+    // .use(remarkPrism, { 
+    //   // showSpotlight: true,
+    //   plugins: [
+    //     // 'autolinker',
+    //     // 'command-line',
+    //     // 'data-uri-highlight',
+    //     // 'diff-highlight',
+    //     // 'inline-color',
+    //     // 'keep-markup',
+    //     // 'line-numbers',
+    //     // 'show-invisibles',
+    //     // 'treeview',
+    //     // 'line-highlight',
+    //   ]
+    // })
+    .use(html)
+    .processSync(this.content)
+    .toString()
 
-//     const $ = cheerio.load(res);
-//     $('h1,h2,h3,h4,h5,h6').each(function(i, elem){
-//       $(this).attr('id', `heading-${i + 1}`)
-//     })
-//     return $("body").html();
-//   })
+    const $ = cheerio.load(res);
+    $('h1,h2,h3,h4,h5,h6').each(function(i, elem){
+      $(this).attr('id', `heading-${i + 1}`)
+    })
+    return $("body").html();
+  })
 
 ArticleSchema.virtual('describe')
   .get(function(){
