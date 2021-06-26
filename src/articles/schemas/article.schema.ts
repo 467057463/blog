@@ -72,11 +72,12 @@ ArticleSchema.virtual('contentHtml')
     .processSync(this.content)
     .toString()
 
-    const $ = cheerio.load(res);
-    $('h1,h2,h3,h4,h5,h6').each(function(i, elem){
-      $(this).attr('id', `heading-${i + 1}`)
-    })
-    return $("body").html();
+    return res;
+    // const $ = cheerio.load(res);
+    // $('h1,h2,h3,h4,h5,h6').each(function(i, elem){
+    //   $(this).attr('id', `heading-${i + 1}`)
+    // })
+    // return $("body").html();
   })
 
 ArticleSchema.virtual('describe')
