@@ -5,7 +5,7 @@ import * as extractToc from 'remark-extract-toc';
 import * as slug from 'remark-slug';
 import * as cheerio from 'cheerio';
 // import * as hljs from 'highlight.js';
-import * as highlight from 'remark-highlight.js';
+// import * as highlight from 'remark-highlight.js';
 import * as remarkPrism from 'remark-prism';
 const { Schema } = mongoose;
 
@@ -56,15 +56,15 @@ ArticleSchema.virtual('contentHtml')
     .use(remarkPrism, { 
       showSpotlight: true,
       plugins: [
-        'autolinker',
-        'command-line',
-        'data-uri-highlight',
-        'diff-highlight',
-        'inline-color',
-        'keep-markup',
+        // 'autolinker',
+        // 'command-line',
+        // 'data-uri-highlight',
+        // 'diff-highlight',
+        // 'inline-color',
+        // 'keep-markup',
         'line-numbers',
-        'show-invisibles',
-        'treeview',
+        // 'show-invisibles',
+        // 'treeview',
         // 'line-highlight',
       ]
     })
