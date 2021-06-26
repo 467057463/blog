@@ -71,7 +71,8 @@ export class ArticlesController {
     if(article){
       if(req.user._id === String(article.author._id)){
         await this.articlesService.updateArticle(id, articleDto)
-        return resSuccess('文章更新成功', article);
+        const res = await this.articlesService.findById(id);        
+        return resSuccess('文章更新成功', res);
       }else{
         throw new UnauthorizedException('权限异常')
       }      
