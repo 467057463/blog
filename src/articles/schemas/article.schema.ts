@@ -62,7 +62,7 @@ ArticleSchema.virtual('contentHtml')
         // 'diff-highlight',
         // 'inline-color',
         // 'keep-markup',
-        'line-numbers',
+        // 'line-numbers',
         // 'show-invisibles',
         // 'treeview',
         // 'line-highlight',
