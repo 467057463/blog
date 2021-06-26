@@ -53,21 +53,21 @@ ArticleSchema.virtual('contentHtml')
     const res = remark()
     // .use(slug)
     // .use(highlight)
-    // .use(remarkPrism, { 
-    //   showSpotlight: true,
-    //   plugins: [
-    //     // 'autolinker',
-    //     // 'command-line',
-    //     // 'data-uri-highlight',
-    //     // 'diff-highlight',
-    //     // 'inline-color',
-    //     // 'keep-markup',
-    //     'line-numbers',
-    //     // 'show-invisibles',
-    //     // 'treeview',
-    //     // 'line-highlight',
-    //   ]
-    // })
+    .use(remarkPrism, { 
+      // showSpotlight: true,
+      plugins: [
+        // 'autolinker',
+        // 'command-line',
+        // 'data-uri-highlight',
+        // 'diff-highlight',
+        // 'inline-color',
+        // 'keep-markup',
+        'line-numbers',
+        // 'show-invisibles',
+        // 'treeview',
+        // 'line-highlight',
+      ]
+    })
     .use(html)
     .processSync(this.content)
     .toString()
